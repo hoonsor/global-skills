@@ -1,0 +1,154 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Project Monitor Output",
+  "description": "統一的專案監控資料格式，供監控網站前端介接使用",
+  "type": "object",
+  "required": ["generated_at", "base_dir", "project_count", "projects"],
+  "properties": {
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "資料產生時間 (ISO 8601)"
+    },
+    "base_dir": {
+      "type": "string",
+      "description": "專案根目錄路徑"
+    },
+    "project_count": {
+      "type": "integer",
+      "description": "專案總數"
+    },
+    "projects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "folder_name", "name", "version"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "專案唯一識別碼 (由資料夾名稱轉換)"
+          },
+          "folder_name": {
+            "type": "string",
+            "description": "原始資料夾名稱"
+          },
+          "name": {
+            "type": "string",
+            "description": "專案顯示名稱"
+          },
+          "version": {
+            "type": "string",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "description": "語義化版本號 (SemVer)"
+          },
+          "github_url": {
+            "type": ["string", "null"],
+            "description": "GitHub 倉庫網址"
+          },
+          "has_git": {
+            "type": "boolean",
+            "description": "是否已初始化 git"
+          },
+          "description": {
+            "type": "string",
+            "description": "專案功能概述"
+          },
+          "changelog": {
+            "type": "array",
+            "description": "版本歷程及功能改變紀錄",
+            "items": {
+              "type": "object",
+              "required": ["version", "date", "type", "description"],
+              "properties": {
+                "version": { "type": "string" },
+                "date": { "type": "string", "format": "date" },
+                "type": {
+                  "type": "string",
+                  "enum": ["feat", "fix", "refactor", "docs", "style", "perf", "test", "chore"]
+                },
+                "description": { "type": "string" }
+              }
+            }
+          },
+          "tasks": {
+            "type": "object",
+            "description": "目前專案進度",
+            "properties": {
+              "main": {
+                "type": "array",
+                "description": "主要任務",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "title": { "type": "string" },
+                    "completed": { "type": "boolean" },
+                    "in_progress": { "type": "boolean" }
+                  }
+                }
+              },
+              "sub": {
+                "type": "array",
+                "description": "次要任務",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "title": { "type": "string" },
+                    "completed": { "type": "boolean" },
+                    "in_progress": { "type": "boolean" }
+                  }
+                }
+              },
+              "deprecated": {
+                "type": "array",
+                "description": "已棄用項目",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "title": { "type": "string" },
+                    "reason": { "type": "string" },
+                    "deprecated_at": { "type": "string", "format": "date" }
+                  }
+                }
+              }
+            }
+          },
+          "revision_history": {
+            "type": "array",
+            "description": "歷次修訂紀錄",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": { "type": "string", "format": "date" },
+                "old_direction": { "type": "string" },
+                "new_direction": { "type": "string" },
+                "reason": { "type": "string" }
+              }
+            }
+          },
+          "recent_commits": {
+            "type": "array",
+            "description": "最近的 git commits",
+            "items": {
+              "type": "object",
+              "properties": {
+                "hash": { "type": "string" },
+                "date": { "type": "string" },
+                "message": { "type": "string" }
+              }
+            }
+          },
+          "last_commit": {
+            "type": ["string", "null"],
+            "format": "date-time",
+            "description": "最後一次 commit 時間"
+          },
+          "last_scanned": {
+            "type": "string",
+            "format": "date-time",
+            "description": "最後掃描時間"
+          }
+        }
+      }
+    }
+  }
+}

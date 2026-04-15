@@ -1,0 +1,63 @@
+{
+  "generated_at": "2026-04-11T16:07:21+08:00",
+  "base_dir": "D:\\01-Project",
+  "project_count": 8,
+  "projects": [
+    {
+      "id": "01-screen-automate",
+      "folder_name": "01-Screen Automate",
+      "name": "AutoWizard — 桌面自動化腳本引擎",
+      "version": "0.3.1",
+      "github_url": "https://github.com/hoonsor/screen-automate",
+      "has_git": true,
+      "tech_stack": ["C# / .NET", "Rust"],
+      "description": "視覺化桌面自動化工具，支援圖像辨識、OCR、色彩檢測等。",
+      "changelog": [
+        {
+          "version": "0.3.1",
+          "date": "2026-04-10",
+          "type": "fix",
+          "description": "修復色彩檢測模組的邊界條件"
+        },
+        {
+          "version": "0.3.0",
+          "date": "2026-03-20",
+          "type": "feat",
+          "description": "新增 OCR 條件與變數支援"
+        }
+      ],
+      "tasks": {
+        "main": [
+          { "title": "核心引擎邏輯", "completed": true, "in_progress": false },
+          { "title": "UI 介面開發", "completed": false, "in_progress": true }
+        ],
+        "sub": [
+          { "title": "OCR 整合", "completed": true, "in_progress": false },
+          { "title": "排程功能", "completed": false, "in_progress": false }
+        ],
+        "deprecated": [
+          {
+            "title": "使用 Selenium 方案",
+            "deprecated": true
+          }
+        ]
+      },
+      "revision_history": [
+        {
+          "date": "2026-03-15",
+          "old_direction": "原先計畫使用 Selenium 方案進行網頁自動化",
+          "reason": "改用原生 Win32 API 以提升效能"
+        }
+      ],
+      "recent_commits": [
+        {
+          "hash": "abc123",
+          "date": "2026-04-10 14:30:00 +0800",
+          "message": "fix: resolve color detection edge case"
+        }
+      ],
+      "last_commit": "2026-04-10T14:30:00+08:00",
+      "last_scanned": "2026-04-11T16:07:21+08:00"
+    }
+  ]
+}
