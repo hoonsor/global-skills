@@ -1,5 +1,5 @@
 ---
-name: project-monitor
+name: hoonsor-project-monitor
 description: Scan, generate, and sync project status files (PROJECT_STATUS.md) across all project directories. Produces unified JSON output for the monitoring website. Use when the user asks to scan projects, update project status, generate project overview, sync project data, monitor project progress, or when working with the 監控AI各專案進度之網站 project. Also triggers when user mentions PROJECT_STATUS, project scanning, or wants to see all project statuses at once.
 ---
 

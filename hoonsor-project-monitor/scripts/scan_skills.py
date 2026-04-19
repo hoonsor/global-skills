@@ -290,8 +290,11 @@ def get_skill_summary(body: str) -> str:
     return result
 
 
-def scan_skill(skill_path: str) -> dict | None:
-    """掃描單一技能資料夾，回傳結構化資料。"""
+def scan_skill(skill_path: str, cache: dict | None = None) -> dict | None:
+    """掃描單一技能資料夾，回傳結構化資料。
+    
+    cache: dict of {skill_name: existing_skill_data}，用於跳過未變更的技能。
+    """
     skill_md = os.path.join(skill_path, "SKILL.md")
     if not os.path.exists(skill_md):
         return None
@@ -301,6 +304,16 @@ def scan_skill(skill_path: str) -> dict | None:
             content = f.read()
     except OSError:
         return None
+
+    # ── 增量快取檢查 ────────────────────────────────────────────────
+    current_mtime = datetime.fromtimestamp(os.path.getmtime(skill_md)).isoformat()
+    skill_name_from_path = os.path.basename(skill_path)
+    if cache and skill_name_from_path in cache:
+        cached = cache[skill_name_from_path]
+        if cached.get("last_modified") == current_mtime:
+            print("[快取] 未變更，跳過")
+            return cached  # 直接回傳快取，不呼叫翻譯 API
+    # ────────────────────────────────────────────────────────────────
 
     frontmatter = parse_yaml_frontmatter(content)
     name = frontmatter.get("name", os.path.basename(skill_path))
@@ -336,9 +349,7 @@ def scan_skill(skill_path: str) -> dict | None:
             if k not in ("name", "description")
         },
         "skill_md_lines": len(content.split("\n")),
-        "last_modified": datetime.fromtimestamp(
-            os.path.getmtime(skill_md)
-        ).isoformat(),
+        "last_modified": current_mtime,
     }
 
 
@@ -372,8 +383,8 @@ def scan_workflow(workflow_path: str) -> dict | None:
     }
 
 
-def scan_all_skills(skills_dir: str) -> list[dict]:
-    """掃描所有技能資料夾。"""
+def scan_all_skills(skills_dir: str, cache: dict | None = None) -> list[dict]:
+    """掃描所有技能資料夾。cache = {skill_folder_name: existing_data}"""
     skills = []
 
     if not os.path.isdir(skills_dir):
@@ -389,7 +400,7 @@ def scan_all_skills(skills_dir: str) -> list[dict]:
 
         print(f"  [技能] 掃描中：{entry} ...", end=" ")
 
-        skill_data = scan_skill(skill_path)
+        skill_data = scan_skill(skill_path, cache)
         if skill_data:
             skills.append(skill_data)
             tag_str = ", ".join(skill_data["tags"]) if skill_data["tags"] else "無標籤"
@@ -454,10 +465,34 @@ def scan_all(
     print(f"  工作流目錄：{workflows_dir}")
     print(f"{'='*60}\n")
 
+    # ── 載入舊版 skills.json 作為快取 ────────────────────────────────
+    cache_by_folder: dict = {}
+    if output_path is None:
+        cache_output_path = os.path.join(DEFAULT_OUTPUT_DIR, "skills.json")
+    else:
+        cache_output_path = output_path
+
+    if os.path.exists(cache_output_path):
+        try:
+            with open(cache_output_path, "r", encoding="utf-8") as f:
+                old_data = json.load(f)
+            for skill in old_data.get("skills", []):
+                folder_name = os.path.basename(skill.get("path", skill.get("name", "")))
+                if folder_name:
+                    cache_by_folder[folder_name] = skill
+            cached_count = len(cache_by_folder)
+            print(f"  ✅ 已載入快取：{cached_count} 個技能（未變更者將直接複用）")
+        except Exception as e:
+            print(f"  ⚠️ 快取載入失敗，將進行完整掃描：{e}")
+    else:
+        print("  ℹ️ 無快取，進行首次完整掃描")
+    print()
+    # ────────────────────────────────────────────────────────────────
+
     # 掃描技能
     print("[Phase 1] 掃描全域技能")
     print("-" * 40)
-    skills = scan_all_skills(skills_dir)
+    skills = scan_all_skills(skills_dir, cache_by_folder)
 
     # 掃描工作流
     print(f"\n[Phase 2] 掃描全域工作流")

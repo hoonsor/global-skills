@@ -1,5 +1,5 @@
 ---
-name: xmind
+name: hoonsor-xmind
 description: >
   Create XMind mind map files (.xmind). Use this skill when the user asks to create a mind map,
   mindmap, XMind file, or brainstorming diagram. Produces native .xmind files that open directly

@@ -1,5 +1,5 @@
 ---
-name: sync-global-skills
+name: hoonsor-sync-global-skills
 description: 協助將所有的全域技能自動推送到指定的 GitHub 倉庫 (https://github.com/hoonsor/global-skills)，方便跨裝置同步與備份。
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: git-push-assistant
+name: hoonsor-git-push-assistant
 description: Automatically writes or updates the project's README.md with a comprehensive large-scale project template before pushing code to GitHub. Trigger this whenever the user confirms they want to push to remote.
 ---
 
@@ -30,7 +30,7 @@ description: Automatically writes or updates the project's README.md with a comp
 利用以下「大型專案通用模板」來撰寫或更新專案根目錄的 `README.md`。
 
 **要求：** 
-- **多段落描述**：標題底下的第一段「專案簡介 (Overview)」必須包含至少一段詳細介紹（建議 100~300 字，分段落），因為 `project-monitor` 技能會抓取此部分展現在網站上。
+- **多段落描述**：標題底下的第一段「專案簡介 (Overview)」必須包含至少一段詳細介紹（建議 100~300 字，分段落），因為 `hoonsor-project-monitor` 技能會抓取此部分展現在網站上。
 - **全 Traditional Chinese** 輸出（除了技術名詞）。
 - 覆蓋或擴展現有的 README.md。
 
