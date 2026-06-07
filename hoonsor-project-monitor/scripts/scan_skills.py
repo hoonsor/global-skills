@@ -35,7 +35,7 @@ if sys.platform == "win32":
             pass  # 已被其他模組設定過
 
 # ─── 預設路徑 ───────────────────────────────────────────────────
-DEFAULT_SKILLS_DIR = r"C:\Users\hoonsor\.gemini\antigravity\skills"
+DEFAULT_SKILLS_DIR = r"C:\Users\hoonsor\.gemini\config\skills"
 DEFAULT_WORKFLOWS_DIR = r"C:\Users\hoonsor\.gemini\antigravity\global_workflows"
 DEFAULT_OUTPUT_DIR = os.path.join(r"D:\01-Project", "08-監控AI各專案進度之網站", "data")
 
@@ -135,20 +135,8 @@ TAG_RULES = [
 ]
 
 def translate_to_zh_tw(text: str) -> str:
-    """使用免費的 Google API 進行英翻中。"""
-    if not text or not text.strip() or len(text) < 2:
-        return text
-    try:
-        url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-TW&dt=t&q=" + urllib.parse.quote(text)
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req, timeout=5) as response:
-            result = json.loads(response.read().decode('utf-8'))
-            val = "".join([sentence[0] for sentence in result[0] if sentence[0]])
-            time.sleep(0.1) # 避免請求過快被鎖
-            return val
-    except Exception as e:
-        # 出錯就退回原本的字串
-        return text
+    """使用免費的 Google API 進行英翻中。（已停用網路請求以防超時）"""
+    return text
 
 def parse_yaml_frontmatter(content: str) -> dict:
     """解析 YAML frontmatter（簡易版，不依賴 PyYAML）。"""
