@@ -66,6 +66,9 @@ skills/
 
 ## 🔄 最新更新 (Recent Updates)
 
+### v1.1.0 (2026-06-08)
+- 新增 `agent-reach` 全域技能，修復 Hatchling 打包 Bug，本地安裝並同步監控網站。
+
 ### v1.0.0 (2026-06-07)
 - 執行全域技能清理（保留遊戲開發引擎相關技能，刪除 74 個冗餘無用技能）。
 - 初始化 `PROJECT_STATUS.md` 與 `README.md`。

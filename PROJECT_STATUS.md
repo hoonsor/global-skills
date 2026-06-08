@@ -1,7 +1,7 @@
 # global-skills
 
-> **版本號：** `v1.0.0`
-> **最後更新：** 2026-06-07
+> **版本號：** `v1.1.0`
+> **最後更新：** 2026-06-08
 > **GitHub：** [https://github.com/hoonsor/global-skills](https://github.com/hoonsor/global-skills)
 
 ---
@@ -16,6 +16,7 @@
 
 | 版本 | 日期 | 類型 | 變更說明 |
 |------|------|------|----------|
+| v1.1.0 | 2026-06-08 | feat | 新增 agent-reach 全域技能，修復 Hatchling 打包 Bug，本地安裝並同步監控網站 |
 | v1.0.0 | 2026-06-07 | feat | 執行全域技能清理（保留遊戲開發引擎相關技能，刪除 74 個無用技能），並初始化 PROJECT_STATUS.md 與 README.md |
 
 ---
