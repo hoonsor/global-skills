@@ -1,6 +1,6 @@
 # global-skills
 
-> **版本號：** `v1.3.0`
+> **版本號：** `v1.3.1`
 > **最後更新：** 2026-06-13
 > **GitHub：** [https://github.com/hoonsor/global-skills](https://github.com/hoonsor/global-skills)
 
@@ -16,6 +16,7 @@
 
 | 版本 | 日期 | 類型 | 變更說明 |
 |------|------|------|----------|
+| v1.3.1 | 2026-06-13 | chore | 同步全域設定（gemini.md）及 hoonsor-error-learning 錯誤學習最新備份檔 |
 | v1.3.0 | 2026-06-13 | refactor | 建立 Skill Vault 冷儲存區，將 1061 個備用技能移出核心目錄，優化系統上下文載入效能 |
 | v1.2.0 | 2026-06-13 | feat | 安裝 AntiGravity 懶人包核心指南與 7 個關聯技能包 |
 | v1.1.0 | 2026-06-08 | feat | 新增 agent-reach 全域技能，修復 Hatchling 打包 Bug，本地安裝並同步監控網站 |
@@ -32,6 +33,7 @@
 - [x] 初始化 `PROJECT_STATUS.md` 與 `README.md`
 - [x] 推送變更至 GitHub 倉庫 `hoonsor/global-skills`
 - [x] 安裝 AntiGravity 懶人包核心文件與 7 個關聯技能包 (v1.2.0)
+- [x] 備份並雙向同步本地全域設定與 hoonsor-error-learning 錯誤學習庫 (v1.3.1)
 
 ### 次要任務
 
