@@ -27,10 +27,12 @@ from pathlib import Path
 # ─── Windows 終端 UTF-8 修正 ───
 if sys.platform == "win32":
     import io
-    if not isinstance(sys.stdout, io.TextIOWrapper) or sys.stdout.encoding != "utf-8":
+    if not getattr(sys.stdout, "_is_utf8_wrapper", False):
         try:
             sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+            sys.stdout._is_utf8_wrapper = True
             sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
+            sys.stderr._is_utf8_wrapper = True
         except (AttributeError, ValueError):
             pass  # 已被其他模組設定過
 
@@ -385,6 +387,8 @@ def scan_all_skills(skills_dir: str, cache: dict | None = None) -> list[dict]:
             continue
         if entry.startswith("."):
             continue
+        if entry == "_Skill_Vault":
+            continue
 
         print(f"  [技能] 掃描中：{entry} ...", end=" ")
 
@@ -464,7 +468,7 @@ def scan_all(
         try:
             with open(cache_output_path, "r", encoding="utf-8") as f:
                 old_data = json.load(f)
-            for skill in old_data.get("skills", []):
+            for skill in old_data.get("skills", []) + old_data.get("frozen_skills", []):
                 folder_name = os.path.basename(skill.get("path", skill.get("name", "")))
                 if folder_name:
                     cache_by_folder[folder_name] = skill
@@ -482,17 +486,39 @@ def scan_all(
     print("-" * 40)
     skills = scan_all_skills(skills_dir, cache_by_folder)
 
+    # 掃描冷凍/備用技能
+    print("\n[Phase 1.5] 掃描冷凍/備用技能 (Skill Vault)")
+    print("-" * 40)
+    frozen_skills_dir = os.path.join(skills_dir, "_Skill_Vault")
+    frozen_skills = []
+    if os.path.isdir(frozen_skills_dir):
+        # 遍歷 _Skill_Vault 下的子分類資料夾
+        for category_name in sorted(os.listdir(frozen_skills_dir)):
+            category_path = os.path.join(frozen_skills_dir, category_name)
+            if not os.path.isdir(category_path) or category_name.startswith("."):
+                continue
+            print(f"\n  [冷凍類別] 掃描分類：{category_name}")
+            category_skills = scan_all_skills(category_path, cache_by_folder)
+            for s in category_skills:
+                s["is_frozen"] = True
+                s["vault_category"] = category_name
+            frozen_skills.extend(category_skills)
+
     # 掃描工作流
     print(f"\n[Phase 2] 掃描全域工作流")
     print("-" * 40)
     workflows = scan_all_workflows(workflows_dir)
 
     # 產生標籤索引
+    # 我們也需要將冷凍技能的標籤包含在標籤索引中嗎？可以，或者只索引啟用的技能
+    # 這裡我們只傳入 skills，如果前端需要也可以包含 frozen_skills。使用者只說新增一個頁籤，我們保持 tag_index 只針對啟用技能以維持清潔，或合在一起。
+    # 保持只針對 skills，或我們讓 generate_tag_index 也能支援 frozen_skills。
+    # 這裡只針對 skills，冷凍技能在另一個頁籤分開呈現。
     tag_index = generate_tag_index(skills)
 
     # 統計
     all_tags = set()
-    for s in skills:
+    for s in skills + frozen_skills:
         all_tags.update(s.get("tags", []))
 
     output = {
@@ -501,11 +527,13 @@ def scan_all(
         "workflows_dir": workflows_dir,
         "stats": {
             "total_skills": len(skills),
+            "total_frozen_skills": len(frozen_skills),
             "total_workflows": len(workflows),
             "total_tags": len(all_tags),
             "tags_list": sorted(all_tags),
         },
         "skills": skills,
+        "frozen_skills": frozen_skills,
         "workflows": workflows,
         "tag_index": tag_index,
     }
@@ -521,7 +549,8 @@ def scan_all(
 
     print(f"\n{'='*60}")
     print(f"  掃描完成！")
-    print(f"  技能數量：{len(skills)}")
+    print(f"  啟用技能數量：{len(skills)}")
+    print(f"  冷凍技能數量：{len(frozen_skills)}")
     print(f"  工作流數量：{len(workflows)}")
     print(f"  標籤總數：{len(all_tags)}")
     print(f"  JSON 輸出：{output_path}")

@@ -12,12 +12,16 @@ from datetime import datetime
 
 if sys.platform == "win32":
     import io
-    try:
-        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
-    except Exception:
-        pass
+    if not getattr(sys.stdout, "_is_utf8_wrapper", False):
+        try:
+            sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+            sys.stdout._is_utf8_wrapper = True
+            sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
+            sys.stderr._is_utf8_wrapper = True
+        except Exception:
+            pass
 
-INPUT_PATH  = r"D:\01-Project\08-監控AI各專案進度之網站\data\skills.json"
+INPUT_PATH  = r"D:\01-Project\08-監控AI各專案進度之網站\public\data\skills.json"
 OUTPUT_PATH = INPUT_PATH
 
 # ─── 全面廣義標籤規則（25 大類 + #通用工具兜底）──────────────────────────
@@ -316,12 +320,15 @@ def main():
         data = json.load(f)
 
     skills = data.get("skills", [])
+    frozen_skills = data.get("frozen_skills", [])
     total = len(skills)
+    total_frozen = len(frozen_skills)
     changed = 0
     fallback_count = 0
 
-    print(f"共 {total} 個技能，套用廣義標籤規則（含 #通用工具 兜底）...\n")
+    print(f"共 {total} 個啟用技能，{total_frozen} 個冷凍技能，套用廣義標籤規則（含 #通用工具 兜底）...\n")
 
+    # 重新標記啟用技能
     for skill in skills:
         old_tags = skill.get("tags", [])
         new_tags = auto_tag(skill.get("name", ""), skill.get("description", ""))
@@ -331,15 +338,22 @@ def main():
         if new_tags == [FALLBACK_TAG]:
             fallback_count += 1
 
-    # 重建 tag_index
+    # 重新標記冷凍技能
+    for skill in frozen_skills:
+        old_tags = skill.get("tags", [])
+        new_tags = auto_tag(skill.get("name", ""), skill.get("description", ""))
+        skill["tags"] = new_tags
+
+    # 重建 tag_index (僅啟用技能)
     tag_index: dict = {}
     for skill in skills:
         for tag in skill.get("tags", []):
             tag_index.setdefault(tag, []).append(skill["name"])
     tag_index = dict(sorted(tag_index.items(), key=lambda x: -len(x[1])))
 
+    # 統計標籤 (啟用 + 冷凍)
     all_tags = set()
-    for s in skills:
+    for s in skills + frozen_skills:
         all_tags.update(s.get("tags", []))
 
     data["tag_index"] = tag_index
@@ -354,19 +368,20 @@ def main():
     meaningful = sum(1 for s in skills if s.get("tags") and s["tags"] != [FALLBACK_TAG])
 
     print(f"✅ 重新標籤完成！")
-    print(f"  總技能數:       {total}")
+    print(f"  總啟用技能數:   {total}")
+    print(f"  總冷凍技能數:   {total_frozen}")
     print(f"  有標籤 (100%):  {tagged_count}")
     print(f"  有意義標籤:     {meaningful} ({meaningful*100//total}%)")
     print(f"  #通用工具 兜底: {fallback_count}")
     print(f"  更新技能數:     {changed}")
-    print(f"\n標籤分佈:")
+    print(f"\n啟用技能標籤分佈:")
     for tag, names in tag_index.items():
         bar = "█" * min(len(names) // 5, 30)
         print(f"  {tag:<12}: {len(names):>4}  {bar}")
     print(f"\n輸出至: {OUTPUT_PATH}")
 
     # ─── 同步產生輕量版 skills_slim.json（前端載入用）────────────────
-    slim_output = OUTPUT_PATH.replace("data\\skills.json", "public\\data\\skills_slim.json")
+    slim_output = os.path.join(os.path.dirname(OUTPUT_PATH), "skills_slim.json")
     slim_skills = []
     for s in skills:
         slim_skills.append({
@@ -376,10 +391,23 @@ def main():
             "summary":      s.get("summary", ""),
             "tags":         s.get("tags", []),
         })
+
+    slim_frozen_skills = []
+    for s in frozen_skills:
+        slim_frozen_skills.append({
+            "name":         s.get("name", ""),
+            "display_name": s.get("display_name", ""),
+            "description":  s.get("description", ""),
+            "summary":      s.get("summary", ""),
+            "tags":         s.get("tags", []),
+            "is_frozen":    True
+        })
+
     slim_data = {
         "generated_at": data.get("generated_at", ""),
         "stats":        data["stats"],
         "skills":       slim_skills,
+        "frozen_skills": slim_frozen_skills,
         "workflows":    [{"name": w.get("name"), "display_name": w.get("display_name"), "content": w.get("content", "")}
                          for w in data.get("workflows", [])],
         "tag_index":    tag_index,
@@ -387,11 +415,18 @@ def main():
     with open(slim_output, "w", encoding="utf-8") as f:
         json.dump(slim_data, f, ensure_ascii=False, separators=(",", ":"))
 
+    # ─── 統計並同步產生 tag_counts.json（前端載入用）────────────────
+    tag_counts = {tag: len(names) for tag, names in tag_index.items()}
+    tag_counts_output = os.path.join(os.path.dirname(OUTPUT_PATH), "tag_counts.json")
+    with open(tag_counts_output, "w", encoding="utf-8") as f:
+        json.dump(tag_counts, f, ensure_ascii=False, separators=(",", ":"))
+
     slim_kb = os.path.getsize(slim_output) // 1024
     full_mb = os.path.getsize(OUTPUT_PATH) / 1024 / 1024
     reduction = 100 - int(slim_kb * 100 / (full_mb * 1024))
     print(f"\n⚡ 輕量版同步: {slim_kb} KB（完整版 {full_mb:.1f} MB，縮減 {reduction}%）")
     print(f"   路徑: {slim_output}")
+    print(f"⚡ 標籤統計同步: {tag_counts_output}")
 
 
 if __name__ == "__main__":
