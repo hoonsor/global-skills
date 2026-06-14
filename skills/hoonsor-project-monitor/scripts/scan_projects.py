@@ -24,10 +24,12 @@ from pathlib import Path
 # ─── Windows 終端 UTF-8 修正 ───
 if sys.platform == "win32":
     import io
-    if not isinstance(sys.stdout, io.TextIOWrapper) or sys.stdout.encoding != "utf-8":
+    if not getattr(sys.stdout, "_is_utf8_wrapper", False):
         try:
             sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+            sys.stdout._is_utf8_wrapper = True
             sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
+            sys.stderr._is_utf8_wrapper = True
         except (AttributeError, ValueError):
             pass
 

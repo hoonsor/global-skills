@@ -29,7 +29,8 @@
         "unsandboxed(yarn)",
         "unsandboxed(docker)",
         "mcp(github-mcp-server/*)",
-        "mcp(gdrive/*)"
+        "mcp(gdrive/*)",
+        "read_url(aiprohub.vercel.app)"
       ]
     },
     "useAiCredits": true

@@ -18,10 +18,12 @@ from datetime import datetime
 # ─── Windows 終端 UTF-8 修正 ───
 if sys.platform == "win32":
     import io
-    if not isinstance(sys.stdout, io.TextIOWrapper) or sys.stdout.encoding != "utf-8":
+    if not getattr(sys.stdout, "_is_utf8_wrapper", False):
         try:
             sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+            sys.stdout._is_utf8_wrapper = True
             sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
+            sys.stderr._is_utf8_wrapper = True
         except (AttributeError, ValueError):
             pass
 
@@ -30,10 +32,11 @@ sys.path.insert(0, os.path.dirname(__file__))
 from scan_projects import scan_all_projects, DEFAULT_BASE_DIR, DEFAULT_OUTPUT_DIR
 from scan_skills import scan_all as scan_all_skills_and_workflows
 from generate_status import generate_status
+from retag_skills import main as run_retag_skills
 
 
 WEBSITE_PROJECT_DIR = os.path.join(DEFAULT_BASE_DIR, "08-監控AI各專案進度之網站")
-WEBSITE_DATA_DIR = os.path.join(WEBSITE_PROJECT_DIR, "data")
+WEBSITE_DATA_DIR = os.path.join(WEBSITE_PROJECT_DIR, "public", "data")
 
 
 def sync_to_website(
@@ -79,6 +82,13 @@ def sync_to_website(
         print("-" * 40)
         skills_output_path = os.path.join(WEBSITE_DATA_DIR, "skills.json")
         skills_result = scan_all_skills_and_workflows(output_path=skills_output_path)
+        
+        print("\n[Phase 2.5] 重新打標籤並產生輕量版技能與統計資料")
+        print("-" * 40)
+        try:
+            run_retag_skills()
+        except Exception as e:
+            print(f"  ⚠️ 執行 retag 失敗: {e}")
         print()
 
     # ─── Phase 3: 產生同步報告 ───

@@ -42,13 +42,15 @@
 | MCP 啟動後無回應 | 檢查 `mcp_config.json` 中的 command 是否匹配實際入口 | #4 |
 | MCP 連接超時 | 重啟 MCP 伺服器，確認 port 未被佔用 | — |
 
-## Git / 部署
+## Git / 部署 / 專案同步
 
 | 錯誤關鍵字 | 正確解法 | 教訓 # |
 |-----------|---------|:-----:|
 | `PrismaClient` / 連線耗盡 | 使用 singleton 模式（參考 ai-pro-hub 專案） | — |
 | `Internal Server Error` (Vercel) | 檢查 API route 是否有未處理的 async 錯誤 | — |
 | `DEPLOYMENT_FAILED` | 查看 Vercel Function logs 而非 Build logs | — |
+| `冷凍技能數量顯示 0 / 掃描跳過` | 檢查目錄深度是否為多層級（如 `_Skill_Vault`），改用兩層深度遍歷 | #8 |
+| `同步資料後網頁無頁籤或無新欄位` | 檢查前端 React 組件與 Hook 是否已同步編寫對應的渲染與資料讀取邏輯 | #9 |
 
 ---
 
