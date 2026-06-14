@@ -35,7 +35,7 @@
 - [x] 推送變更至 GitHub 倉庫 `hoonsor/global-skills`
 - [x] 安裝 AntiGravity 懶人包核心文件與 7 個關聯技能包 (v1.2.0)
 - [x] 備份並雙向同步本地全域設定與 hoonsor-error-learning 錯誤學習庫 (v1.3.1)
-- [/] 備份範圍擴展至整個 config 資料夾，實作金鑰安全過濾與 projects/ 排除機制 (v1.4.0)
+- [x] 備份範圍擴展至整個 config 資料夾，實作金鑰安全過濾與 projects/ 排除機制 (v1.4.0)
 
 ### 次要任務
 

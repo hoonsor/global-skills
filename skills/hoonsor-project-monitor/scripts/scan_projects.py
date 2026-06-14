@@ -101,6 +101,7 @@ def get_git_log(project_path: str, max_entries: int = 50) -> list[dict]:
             cwd=project_path,
             capture_output=True,
             text=True,
+            encoding="utf-8",
             timeout=30,
         )
         if result.returncode == 0 and result.stdout.strip():
