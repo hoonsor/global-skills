@@ -13,8 +13,6 @@
 | `無法辨識` / `is not recognized` | 用完整絕對路徑執行指令 | #4 |
 | `PermissionError` / `AccessDenied` | 以管理員權限執行，或檢查檔案鎖定 | — |
 | `cp65001` / `chcp` | 終端設定 `chcp 65001` 或用 `$env:PYTHONIOENCODING` | #1 |
-| `&&` 語法無效 | 使用 `;` 取代 `&&` 串接 PowerShell 命令 | #5 |
-| `grep` / `executable file not found` | 改用 `grep_search` API 工具 | #5 |
 
 ## Python 依賴
 
@@ -23,7 +21,6 @@
 | `ModuleNotFoundError` | 直接用 `.venv\Scripts\pip.exe install <pkg>` | #3 |
 | `No module named 'patchright'` | `pip install patchright` (在正確的 venv 中) | #3 |
 | `pip` / `版本衝突` | `pip install --force-reinstall <pkg>==<version>` | #3 |
-| `Export ... doesn't exist` | 檢查套件版本匯出名稱，或改用其他通用元件/圖示 | #7 |
 
 ## 瀏覽器自動化
 

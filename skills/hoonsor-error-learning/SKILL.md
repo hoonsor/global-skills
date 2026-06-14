@@ -57,6 +57,7 @@ Step 3: 若未命中 → view_file error_lessons.md（~2,500 tokens）
 ### 模式 B：主動學習（使用者明確呼叫）
 
 當使用者說出以下關鍵詞時，執行完整的 Phase 1-5 流程：
+- 「#學習」
 - 「記錄這次的錯誤」/ 「學習這次教訓」/ 「error learning」
 - 「把這次的經驗記下來」
 - 「分析這次浪費了多少 tokens」

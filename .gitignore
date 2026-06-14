@@ -1,0 +1,11 @@
+# 排除敏感金鑰設定
+mcp_config.json
+
+# 排除本機特定專案設定
+projects/
+
+# 排除遷移標記
+.migrated
+
+# 排除臨時/日誌檔案
+*.log

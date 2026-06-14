@@ -1,0 +1,37 @@
+{
+  "userSettings": {
+    "globalPermissionGrants": {
+      "allow": [
+        "read_url(raw.githubusercontent.com)",
+        "read_url(api.github.com)",
+        "command(curl)",
+        "command(firebase)",
+        "command(git)",
+        "command(node)",
+        "command(npm)",
+        "command(npx)",
+        "command(pip)",
+        "command(python)",
+        "command(uv)",
+        "command(vercel)",
+        "command(yarn)",
+        "command(docker)",
+        "unsandboxed(curl)",
+        "unsandboxed(firebase)",
+        "unsandboxed(git)",
+        "unsandboxed(node)",
+        "unsandboxed(npm)",
+        "unsandboxed(npx)",
+        "unsandboxed(pip)",
+        "unsandboxed(python)",
+        "unsandboxed(uv)",
+        "unsandboxed(vercel)",
+        "unsandboxed(yarn)",
+        "unsandboxed(docker)",
+        "mcp(github-mcp-server/*)",
+        "mcp(gdrive/*)"
+      ]
+    },
+    "useAiCredits": true
+  }
+}

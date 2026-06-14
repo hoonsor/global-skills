@@ -1,14 +1,14 @@
-# global-skills
+# Antigravity-Setting-and-Skills
 
-> **版本號：** `v1.3.1`
-> **最後更新：** 2026-06-13
-> **GitHub：** [https://github.com/hoonsor/global-skills](https://github.com/hoonsor/global-skills)
+> **版本號：** `v1.4.0`
+> **最後更新：** 2026-06-14
+> **GitHub：** [https://github.com/hoonsor/Antigravity-Setting-and-Skills](https://github.com/hoonsor/Antigravity-Setting-and-Skills)
 
 ---
 
 ## 📖 專案程式功能概述
 
-此倉庫儲存與管理 Antigravity AI 代理的所有「全域技能 (Global Skills)」。這些技能包含了自動化腳本、人機指南、測試工具與各種領域的專業知識，供 AI 協作時動態調用與執行。
+此倉庫儲存與管理 Antigravity AI 代理的所有「全域設定與技能 (Antigravity Settings and Skills)」。包含全域權限許可 (`config.json`)、外掛模組 (`plugins/`)、自動化腳本、人機指南、測試工具與各種領域的專業知識，供 AI 協作時動態調用與執行。
 
 ---
 
@@ -16,6 +16,7 @@
 
 | 版本 | 日期 | 類型 | 變更說明 |
 |------|------|------|----------|
+| v1.4.0 | 2026-06-14 | feat | 重構備份範圍至整個 config 目錄，新增自動遮蔽金鑰與本機特定路徑排除機制 |
 | v1.3.1 | 2026-06-13 | chore | 同步全域設定（gemini.md）及 hoonsor-error-learning 錯誤學習最新備份檔 |
 | v1.3.0 | 2026-06-13 | refactor | 建立 Skill Vault 冷儲存區，將 1061 個備用技能移出核心目錄，優化系統上下文載入效能 |
 | v1.2.0 | 2026-06-13 | feat | 安裝 AntiGravity 懶人包核心指南與 7 個關聯技能包 |
@@ -34,6 +35,7 @@
 - [x] 推送變更至 GitHub 倉庫 `hoonsor/global-skills`
 - [x] 安裝 AntiGravity 懶人包核心文件與 7 個關聯技能包 (v1.2.0)
 - [x] 備份並雙向同步本地全域設定與 hoonsor-error-learning 錯誤學習庫 (v1.3.1)
+- [/] 備份範圍擴展至整個 config 資料夾，實作金鑰安全過濾與 projects/ 排除機制 (v1.4.0)
 
 ### 次要任務
 

@@ -1,0 +1,30 @@
+﻿{
+    "mcpServers":  {
+                       "gdrive":  {
+                                      "command":  "npx",
+                                      "args":  [
+                                                   "-y",
+                                                   "@modelcontextprotocol/server-gdrive"
+                                               ],
+                                      "env":  {
+                                                  "GDRIVE_OAUTH_PATH":  "YOUR_GDRIVE_OAUTH_PATH_HERE",
+                                                  "GDRIVE_CREDENTIALS_PATH":  "YOUR_GDRIVE_CREDENTIALS_PATH_HERE"
+                                              }
+                                  },
+                       "github-mcp-server":  {
+                                                 "$typeName":  "exa.cascade_plugins_pb.CascadePluginCommandTemplate",
+                                                 "command":  "docker",
+                                                 "args":  [
+                                                              "run",
+                                                              "-i",
+                                                              "--rm",
+                                                              "-e",
+                                                              "GITHUB_PERSONAL_ACCESS_TOKEN",
+                                                              "ghcr.io/github/github-mcp-server"
+                                                          ],
+                                                 "env":  {
+                                                             "GITHUB_PERSONAL_ACCESS_TOKEN":  "YOUR_GITHUB_PAT_HERE"
+                                                         }
+                                             }
+                   }
+}
