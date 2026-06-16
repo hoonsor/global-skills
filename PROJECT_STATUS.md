@@ -1,6 +1,6 @@
 # Antigravity-Setting-and-Skills
 
-> **版本號：** `v1.6.1`
+> **版本號：** `v1.6.2`
 > **最後更新：** 2026-06-16
 > **GitHub：** [https://github.com/hoonsor/Antigravity-Setting-and-Skills](https://github.com/hoonsor/Antigravity-Setting-and-Skills)
 
@@ -16,6 +16,7 @@
 
 | 版本 | 日期 | 類型 | 變更說明 |
 |------|------|------|----------|
+| v1.6.2 | 2026-06-16 | feat(pref) | 透過 `#喜好` 指令自動擷取對話紀錄，補充「詳盡功能閉環」、「編輯器進階要求」、「資料顯示細節」等開發規範至 `PREFERENCES.md` |
 | v1.6.1 | 2026-06-16 | feat | 透過 `#喜好` 指令自動擷取對話紀錄，新增「功能開發與模塊完整度」等偏好設定至 `PREFERENCES.md` |
 | v1.6.0 | 2026-06-16 | feat | 新增 `hoonsor-preferences` 技能的 `#喜好` 指令，支持自動擷取對話紀錄中的使用者偏好並寫入資料庫 |
 | v1.5.2 | 2026-06-16 | fix | 修復 `scan_projects.py` 掃描器在讀取 ANSI/CP950 編碼的專案狀態文件時發生的解碼崩潰問題 |
