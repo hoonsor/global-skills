@@ -1,6 +1,6 @@
 # Antigravity-Setting-and-Skills
 
-> **版本號：** `v1.5.1`
+> **版本號：** `v1.5.2`
 > **最後更新：** 2026-06-16
 > **GitHub：** [https://github.com/hoonsor/Antigravity-Setting-and-Skills](https://github.com/hoonsor/Antigravity-Setting-and-Skills)
 
@@ -16,7 +16,8 @@
 
 | 版本 | 日期 | 類型 | 變更說明 |
 |------|------|------|----------|
-| v1.5.1 | 2026-06-16 | docs | 建立 `ANTIGRAVITY.md` 架構引導指南文件，以符合全域專案架構規範 |
+| v1.5.2 | 2026-06-16 | fix | 修復 `scan_projects.py` 掃描器在讀取 ANSI/CP950 編碼的專案狀態文件時發生的解碼崩潰問題 |
+| v1.5.1 | 2026-06-16 | docs | 建立 `ANTIGRAVITY.md` 架構引導指南文件，以符合全域專案架觀規範 |
 | v1.5.0 | 2026-06-16 | feat | 新增 `hoonsor-preferences` 使用者個人偏好與創作風格全域技能，用於在任務交辦時記錄與參考使用者偏好 |
 | v1.4.0 | 2026-06-14 | feat | 重構備份範圍至整個 config 目錄，新增自動遮蔽金鑰與本機特定路徑排除機制 |
 | v1.3.1 | 2026-06-13 | chore | 同步全域設定（gemini.md）及 hoonsor-error-learning 錯誤學習最新備份檔 |

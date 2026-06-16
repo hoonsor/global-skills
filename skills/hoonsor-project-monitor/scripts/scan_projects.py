@@ -272,8 +272,12 @@ def parse_status_file(project_path: str) -> dict:
         return result
 
     try:
-        with open(status_md, "r", encoding="utf-8") as f:
-            content = f.read()
+        try:
+            with open(status_md, "r", encoding="utf-8") as f:
+                content = f.read()
+        except UnicodeDecodeError:
+            with open(status_md, "r", encoding="cp950", errors="replace") as f:
+                content = f.read()
     except OSError:
         return result
 
