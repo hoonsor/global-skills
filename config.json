@@ -30,7 +30,8 @@
         "unsandboxed(docker)",
         "mcp(github-mcp-server/*)",
         "mcp(gdrive/*)",
-        "read_url(aiprohub.vercel.app)"
+        "read_url(aiprohub.vercel.app)",
+        "read_url(tyai.tyc.edu.tw)"
       ]
     },
     "useAiCredits": true

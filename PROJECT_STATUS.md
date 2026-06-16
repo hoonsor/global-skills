@@ -1,7 +1,7 @@
 # Antigravity-Setting-and-Skills
 
-> **版本號：** `v1.4.0`
-> **最後更新：** 2026-06-14
+> **版本號：** `v1.5.0`
+> **最後更新：** 2026-06-16
 > **GitHub：** [https://github.com/hoonsor/Antigravity-Setting-and-Skills](https://github.com/hoonsor/Antigravity-Setting-and-Skills)
 
 ---
@@ -16,6 +16,7 @@
 
 | 版本 | 日期 | 類型 | 變更說明 |
 |------|------|------|----------|
+| v1.5.0 | 2026-06-16 | feat | 新增 `hoonsor-preferences` 使用者個人偏好與創作風格全域技能，用於在任務交辦時記錄與參考使用者偏好 |
 | v1.4.0 | 2026-06-14 | feat | 重構備份範圍至整個 config 目錄，新增自動遮蔽金鑰與本機特定路徑排除機制 |
 | v1.3.1 | 2026-06-13 | chore | 同步全域設定（gemini.md）及 hoonsor-error-learning 錯誤學習最新備份檔 |
 | v1.3.0 | 2026-06-13 | refactor | 建立 Skill Vault 冷儲存區，將 1061 個備用技能移出核心目錄，優化系統上下文載入效能 |
@@ -29,6 +30,7 @@
 
 ### 主要任務
 
+- [x] 建立 `hoonsor-preferences` 使用者個人偏好與創作風格全域技能 (v1.5.0)
 - [x] 執行技能冷儲存清理作業，將非核心技能搬移至 `_Skill_Vault` 分類目錄
 - [x] 執行全域技能清理，移除 74 個無用目錄
 - [x] 初始化 `PROJECT_STATUS.md` 與 `README.md`
