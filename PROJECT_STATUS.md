@@ -1,6 +1,6 @@
 # Antigravity-Setting-and-Skills
 
-> **版本號：** `v1.6.0`
+> **版本號：** `v1.6.1`
 > **最後更新：** 2026-06-16
 > **GitHub：** [https://github.com/hoonsor/Antigravity-Setting-and-Skills](https://github.com/hoonsor/Antigravity-Setting-and-Skills)
 
@@ -16,6 +16,7 @@
 
 | 版本 | 日期 | 類型 | 變更說明 |
 |------|------|------|----------|
+| v1.6.1 | 2026-06-16 | feat | 透過 `#喜好` 指令自動擷取對話紀錄，新增「功能開發與模塊完整度」等偏好設定至 `PREFERENCES.md` |
 | v1.6.0 | 2026-06-16 | feat | 新增 `hoonsor-preferences` 技能的 `#喜好` 指令，支持自動擷取對話紀錄中的使用者偏好並寫入資料庫 |
 | v1.5.2 | 2026-06-16 | fix | 修復 `scan_projects.py` 掃描器在讀取 ANSI/CP950 編碼的專案狀態文件時發生的解碼崩潰問題 |
 | v1.5.1 | 2026-06-16 | docs | 建立 `ANTIGRAVITY.md` 架構引導指南文件，以符合全域專案架觀規範 |
@@ -33,6 +34,7 @@
 
 ### 主要任務
 
+- [x] 透過 `#喜好` 自動擷取並更新 `PREFERENCES.md` 的功能完整度偏好 (v1.6.1)
 - [x] 建立並實現 `hoonsor-preferences` 的 `#喜好` 專屬指令 (v1.6.0)
 - [x] 建立 `ANTIGRAVITY.md` 架構引導指南文件 (v1.5.1)
 - [x] 建立 `hoonsor-preferences` 使用者個人偏好與創作風格全域技能 (v1.5.0)
