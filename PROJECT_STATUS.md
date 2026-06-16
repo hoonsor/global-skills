@@ -1,6 +1,6 @@
 # Antigravity-Setting-and-Skills
 
-> **版本號：** `v1.6.2`
+> **版本號：** `v1.6.3`
 > **最後更新：** 2026-06-16
 > **GitHub：** [https://github.com/hoonsor/Antigravity-Setting-and-Skills](https://github.com/hoonsor/Antigravity-Setting-and-Skills)
 
@@ -16,6 +16,7 @@
 
 | 版本 | 日期 | 類型 | 變更說明 |
 |------|------|------|----------|
+| v1.6.3 | 2026-06-16 | feat | 修改 05-workflow 技能中 `#初始化` 流程，支援已存在 Git 設定且曾上傳/未上傳的偵測、Vercel 部署詢問及新遠端庫建立之互動分流 |
 | v1.6.2 | 2026-06-16 | feat(pref) | 透過 `#喜好` 指令自動擷取對話紀錄，補充「詳盡功能閉環」、「編輯器進階要求」、「資料顯示細節」等開發規範至 `PREFERENCES.md` |
 | v1.6.1 | 2026-06-16 | feat | 透過 `#喜好` 指令自動擷取對話紀錄，新增「功能開發與模塊完整度」等偏好設定至 `PREFERENCES.md` |
 | v1.6.0 | 2026-06-16 | feat | 新增 `hoonsor-preferences` 技能的 `#喜好` 指令，支持自動擷取對話紀錄中的使用者偏好並寫入資料庫 |
